@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/css/styles.css' %}">
+</head>
+<header>
+
+    <div class="logo">
+        <h3>CK</h3>
+    </div>
+
+    <div class="question_number">
+        <h3>Вопрос {{question.number}}/100</h3>
+    </div>
+
+</header>
+
+<body>
+<div class="main_block">
+    <h1>Вопрос</h1>
+
+    <div class="question_placeholder">
+
+        <div>
+            <h2>{{question.question}}</h2>
+        </div>
+
+        <div>
+            <p>{{question.options}}</p>
+        </div>
+
+        <div>
+            {% if question.question_image %}
+            <img src="{{question.question_image.url}}" class="question_image">
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="buttons_container">
+    <form action="{% url 'answered_question' %}" method="post">
+        {% csrf_token %}
+        <input type="text" placeholder="Ответ:" class="answer" name="answer">
+        <span class="result">{{result}}</span>
+
+        <button type="submit" class="answer_button">
+            Ответить на вопрос
+        </button>
+    </form>
+
+    <form action="{% url 'show_answer' %}" method="post">
+        {% csrf_token %}
+        <button class="show_answer_button">
+            Посмотреть ответ
+        </button>
+    </form>
+
+    <form action="{% url 'home' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="next_question">
+            Следующий вопрос
+        </button>
+    </form>
+</div>
+</body>
+</html>
