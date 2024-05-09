@@ -1,28 +1,28 @@
 from django.shortcuts import render
-from .models import TestQuestions, Users
+from .models import TestQuestions, UsersQuestionTables
 from random import randint
-from django.core.cache import cache
 
 
 def index(request):
     question_count = len(TestQuestions.objects.all())
     question_number = randint(1, question_count)
-    current_user = request.user.id
 
-    if Users.objects.get(user_id=current_user):
-        user = Users.objects.get(user_id=current_user)
+    current_user_ip_address = request.META['REMOTE_ADDR']
+
+    try:
+        user = UsersQuestionTables.objects.get(user_ip=current_user_ip_address)
         user.current_question = question_number
         user.save()
-    else:
-        Users.objects.create(user_id=current_user, current_question=question_number)
+    except Exception as e:
+        UsersQuestionTables.objects.create(user_ip=current_user_ip_address, current_question=question_number)
 
     question = TestQuestions.objects.get(id=question_number)
     return render(request, 'main/index.html', {'question': question})
 
 
 def show_answer(request):
-    current_user = request.user.id
-    user = Users.objects.get(user_id=current_user)
+    current_user_ip_address = request.META['REMOTE_ADDR']
+    user = UsersQuestionTables.objects.get(user_ip=current_user_ip_address)
     question_number = user.current_question
 
     question = TestQuestions.objects.get(id=question_number)
@@ -30,8 +30,8 @@ def show_answer(request):
 
 
 def answered_question(request):
-    current_user = request.user.id
-    user = Users.objects.get(user_id=current_user)
+    current_user_ip_address = request.META['REMOTE_ADDR']
+    user = UsersQuestionTables.objects.get(user_id=current_user_ip_address)
     question_number = user.current_question
 
     answer = request.POST['answer']

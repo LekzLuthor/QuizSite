@@ -33,3 +33,11 @@ class Users(models.Model):
 
     def __str__(self):
         return f'{self.user_id}, {self.current_question}'
+
+
+class UsersQuestionTables(models.Model):
+    user_ip = models.CharField('ip', max_length=50)
+    current_question = models.IntegerField('current_question_number')
+
+    def __str__(self):
+        return f'{self.user_ip}, {self.current_question}'
