@@ -129,7 +129,8 @@ header {
 
 .question_image {
     width: auto;
-    max-height: 260px;
+    max-height: 50%;
+
 }
 
 .answer_label {

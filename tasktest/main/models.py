@@ -25,3 +25,11 @@ class TestQuestions(models.Model):
     class Meta:
         verbose_name = 'Вопрос'
         verbose_name_plural = 'Вопросы'
+
+
+class Users(models.Model):
+    user_id = models.IntegerField('id', unique=True)
+    current_question = models.IntegerField('current_question_number')
+
+    def __str__(self):
+        return f'{self.user_id}, {self.current_question}'
