@@ -20,22 +20,32 @@ def index(request):
     return render(request, 'main/index.html', {'question': question})
 
 
-def show_answer(request):
+
+'''def show_answer(request):
     current_user_ip_address = request.META['REMOTE_ADDR']
     user = UsersQuestionTables.objects.get(user_ip=current_user_ip_address)
     question_number = user.current_question
 
     question = TestQuestions.objects.get(id=question_number)
     return render(request, 'main/show_answer.html', {'question': question})
+'''
+
+def show_answer(request, id):
+    # question_number = request.META['REMOTE_ADDR']
+    #user = UsersQuestionTables.objects.get(user_ip=current_user_ip_address)
+    #question_number = user.current_question
+
+    question = TestQuestions.objects.get(id=id)
+    return render(request, 'main/show_answer.html', {'question': question})
 
 
-def answered_question(request):
-    current_user_ip_address = request.META['REMOTE_ADDR']
-    user = UsersQuestionTables.objects.get(user_ip=current_user_ip_address)
-    question_number = user.current_question
+def answered_question(request, id):
+    #current_user_ip_address = request.META['REMOTE_ADDR']
+    #user = UsersQuestionTables.objects.get(user_ip=current_user_ip_address)
+    #question_number = user.current_question
 
     answer = request.POST['answer']
-    question = TestQuestions.objects.get(id=question_number)
+    question = TestQuestions.objects.get(id=id)
     if answer.strip().lower() == question.answer.strip().lower():
         return render(request, 'main/answered_question.html', {'result': '✅', 'question': question})
     return render(request, 'main/answered_question.html', {'result': '❌', 'question': question})
