@@ -42,7 +42,7 @@
 </div>
 
 <div class="buttons_container">
-    <form action="{% url 'answered_question' %}" method="post">
+    <form action="{% url 'answered_question' question.id%}" method="post">
         {% csrf_token %}
         <input type="text" placeholder="Ответ:" class="answer" name="answer">
         <span class="result">{{result}}</span>
@@ -52,15 +52,13 @@
         </button>
     </form>
 
-    <form action="{% url 'show_answer' %}" method="post">
-        {% csrf_token %}
+    <form action="{% url 'show_answer' question.id%}" method="get">
         <button class="show_answer_button">
             Посмотреть ответ
         </button>
     </form>
 
-    <form action="{% url 'home' %}" method="post">
-        {% csrf_token %}
+    <form action="{% url 'home' %}" method="get">
         <button type="submit" class="next_question">
             Следующий вопрос
         </button>
