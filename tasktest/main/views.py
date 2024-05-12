@@ -31,7 +31,7 @@ def show_answer(request):
 
 def answered_question(request):
     current_user_ip_address = request.META['REMOTE_ADDR']
-    user = UsersQuestionTables.objects.get(user_id=current_user_ip_address)
+    user = UsersQuestionTables.objects.get(user_ip=current_user_ip_address)
     question_number = user.current_question
 
     answer = request.POST['answer']
